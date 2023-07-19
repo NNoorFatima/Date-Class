@@ -40,25 +40,26 @@ Date& Date::operator-(int n)
     
 }
 //============================================================================
-Date& Date:: operator+(int n)
+Date& Date:: operator+(int n)       
 {
     //jan, mar, may, july, aug, oct, dec have 31 days 
     // others have 30 days with exception of feb 
     //if it is a leap year feb has 29 days else 28
     int days_left;
+    int month_days;
     if(month != 02)
     {
         if(month==8 || month==3 || month==5 || month==7 || month==10 || month==12 || month == 1)
-            days_left=31-day;
+        {    days_left=31-day;month_days=31;}
         else
-            days_left=30-day;
+        {    days_left=30-day;month_days=30;}
     }
     else 
     {
         if(isLeapYear()==1)
-            days_left=29-day;
+        {    days_left=29-day;month_days=29;}
         else
-        days_left=28-day;
+        {   days_left=28-day;month_days=28;}
     }
     
     if(n<days_left)
@@ -68,18 +69,53 @@ Date& Date:: operator+(int n)
     else//n=4 days left 30-day  n=n-days
     {
         n=n - days_left;
-        if(month<12)
-            month+=1;
-        else 
+        month+=1;
+        if(month != 2)
         {
-            year+=1;
-            month=1;
+            if(month==8 || month==3 || month==5 || month==7 || month==10 || month==12 || month == 1)
+                month_days=31;
+            else
+                month_days=30;
         }
-        if(n==0)
-            day=1;
         else
-            day=n;
-        
+        {
+            if(isLeapYear()==1)
+                month_days=29;
+            else
+                month_days=28;
+        }
+        // cout<<n<<endl;
+        //  cout<<month_days<<endl;
+        //  cout<<"Month: "<<month<<endl;
+        while(n>=month_days)
+        {
+            n= n-month_days;
+            // cout<<n<<endl;
+            if(month>=12)
+            {
+                year+=1;
+                month=1;
+            }
+            else
+            {
+                month+=1;
+            }
+            if(month != 2)
+            {
+                if(month==8 || month==3 || month==5 || month==7 || month==10 || month==12 || month == 1)
+                    month_days=31;
+                else
+                    month_days=30;
+            }
+            else
+            {
+                if(isLeapYear()==1)
+                    month_days=29;
+                else
+                    month_days=28;
+            }
+            day = n;
+        }
          
     }
     return *this;
