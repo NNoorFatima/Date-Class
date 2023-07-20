@@ -15,11 +15,13 @@ class Date
     Date& operator+(int n);
     Date& operator-(int n);
     Date& operator+(Date& a);
+    Date& operator-(Date& a);
     bool operator<(Date& a);
     bool operator<=(Date& a);
     bool operator>(Date & a);
     bool operator>=(Date & a);
     bool operator==(Date& a);
     bool operator!=(Date& a);
+    string toString();
     friend ostream& operator<<(ostream& output,Date& d );
 };
